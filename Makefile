@@ -1,7 +1,4 @@
-default: compiler.c
-	gcc -Wall -Wextra -std=c99 compiler.c -o swanc
-
-parser: lexer.l parse.y
+default: lexer.l parse.y compiler.c
 	yacc -d parse.y
 	lex lexer.l
-	gcc lex.yy.c y.tab.c -o test -lfl
+	gcc -g -Wall -Wextra -std=c99 lex.yy.c y.tab.c compiler.c -o swanc -lfl
