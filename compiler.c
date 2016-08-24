@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "ast.h"
-#include "driver.h"
 
 
 /* Simplest thing that could work:
@@ -28,7 +27,9 @@ void print_ast_node(int level, struct ast_node *node) {
     }
 }
 
-int main(int argc, char** argv) {
+extern struct ast_node *parse_result;
+
+int main() {
   printf("yyparse result: %d", yyparse());
   print_ast_node(0, parse_result);
   return 0;

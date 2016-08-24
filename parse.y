@@ -22,11 +22,11 @@ struct ast_node *parse_result;
 %%
 function:      type ID TOK_LPAREN TOK_RPAREN statement
                 {
-                    struct ast_node node;
-                    node.class = FUNCTION;
-                    node.function.name = $2;
-                    node.function.body = $5;
-                    parse_result = &node;
+                  struct ast_node *node = malloc(sizeof(struct ast_node));
+                  node->class = FUNCTION;
+                  node->function.name = $2;
+                  node->function.body = $5;
+                  parse_result = node;
                 }
         ;
 
@@ -43,20 +43,20 @@ statements:     /* empty */
 
 statement:      TOK_RETURN expr TOK_SEMICOLON
                 {
-                    struct ast_node node;
-                    node.class = RETURN;
-                    node.return_value = $2;
-                    $$ = &node;
+                  struct ast_node *node = malloc(sizeof(struct ast_node));
+                  node->class = RETURN;
+                  node->return_value = $2;
+                  $$ = node;
                 }
         |        TOK_LCURLY statements TOK_RCURLY
         ;
 
 expr:           NUMBER
                 {
-                    struct ast_node node;
-                    node.class = CONSTANT;
-                    node.value = atoi($1);
-                    $$ = &node;
+                    struct ast_node *node = malloc(sizeof(struct ast_node));
+                    node->class = CONSTANT;
+                    node->value = atoi($1);
+                    $$ = node;
                 }
         ;
 
